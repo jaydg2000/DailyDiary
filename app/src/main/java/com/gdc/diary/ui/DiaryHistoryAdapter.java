@@ -1,8 +1,5 @@
 package com.gdc.diary.ui;
 
-import android.content.Context;
-import android.graphics.ColorSpace;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +9,7 @@ import android.widget.TextView;
 
 import com.gdc.diary.ActivityEntryDetails;
 import com.gdc.diary.R;
-import com.gdc.diary.data.DiaryEntry;
+import com.gdc.diary.domain.DiaryEntry;
 import com.gdc.diary.helpers.DateHelper;
 
 import java.util.List;
@@ -43,8 +40,8 @@ public class DiaryHistoryAdapter extends RecyclerView.Adapter<DiaryHistoryAdapte
         int readingGoodColor = ResourcesCompat.getColor(viewHolder.parentView.getResources(), R.color.readingGood, null);
         int readingBadColor = ResourcesCompat.getColor(viewHolder.parentView.getResources(), R.color.readingBad, null);
         final DiaryEntry entry = entries.get(position);
-        viewHolder.textViewMorningReading.setText(Integer.toString(entry.getMorningReading()));
-        viewHolder.textViewWeight.setText(Integer.toString(entry.getWeight()));
+        viewHolder.textViewMorningReading.setText(formatReading(entry.getMorningReading()));
+        viewHolder.textViewWeight.setText(formatReading(entry.getWeight()));
         // TODO add Yes/No to resource file.
         viewHolder.textViewMorningMeds.setText(entry.hasTakenMorningMeds() ? "Yes" : "No");
         viewHolder.textViewEveningMeds.setText(entry.hasTakenEveningMeds() ? "Yes" : "No");
@@ -65,6 +62,13 @@ public class DiaryHistoryAdapter extends RecyclerView.Adapter<DiaryHistoryAdapte
     @Override
     public int getItemCount() {
         return entries.size();
+    }
+
+    private String formatReading(int reading) {
+        if (reading < 1) {
+            return "";
+        }
+        return Integer.toString(reading);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
