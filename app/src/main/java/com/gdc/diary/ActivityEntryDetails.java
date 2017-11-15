@@ -2,21 +2,25 @@ package com.gdc.diary;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gdc.diary.data.DiaryEntry;
-import com.gdc.diary.data.DiaryRepository;
+import com.gdc.diary.domain.DiaryEntry;
 import com.gdc.diary.helpers.DateHelper;
+import com.gdc.diary.repository.DiaryRepository;
 
 import java.util.Date;
 
 public class ActivityEntryDetails extends AppCompatActivity {
 
+    public static final long NEW_ENTRY_ID = -1;
+    public static final long TODAY_ENTRY_ID = -2;
     public static final String EXTRAS_KEY_ENTRY_ID = "entry_id";
+
     private DiaryEntry diaryEntry;
 
     private TextView textViewDate;
@@ -25,10 +29,15 @@ public class ActivityEntryDetails extends AppCompatActivity {
     private CheckBox checkBoxMorning;
     private CheckBox checkBoxEvening;
 
-    public static void start(Context context, int id) {
+    public static void start(Context context, long id) {
         Intent starter = new Intent(context, ActivityEntryDetails.class);
         starter.putExtra(EXTRAS_KEY_ENTRY_ID, id);
         context.startActivity(starter);
+    }
+
+    public void populateDiaryEntry(DiaryEntry diaryEntry) {
+        this.diaryEntry = diaryEntry;
+        bindData();
     }
 
     @Override
@@ -43,34 +52,105 @@ public class ActivityEntryDetails extends AppCompatActivity {
         checkBoxEvening = (CheckBox) findViewById(R.id.checkBoxTookEveningMeds);
 
         loadDiaryEntry();
-        bindData();
     }
 
     private void bindData() {
         textViewDate.setText(DateHelper.getDisplayableDateStr(diaryEntry.getReadingDate()));
-        editTextReading.setText(Integer.toString(diaryEntry.getMorningReading()));
-        editTextWeight.setText(Integer.toString(diaryEntry.getWeight()));
+        editTextReading.setText(formatReading(diaryEntry.getMorningReading()));
+        editTextWeight.setText(formatReading(diaryEntry.getWeight()));
         checkBoxMorning.setChecked(diaryEntry.hasTakenMorningMeds());
         checkBoxEvening.setChecked(diaryEntry.hasTakenEveningMeds());
     }
 
-    private void loadDiaryEntry() {
-        int entryId = getPassedEntryId();
+    private String formatReading(int reading) {
+        if (reading < 1) {
+            return "";
+        }
+        return Integer.toString(reading);
+    }
 
-        if (entryId == DiaryRepository.NEW_ENTRY_ID) {
-            createNewEntry();
+    private void loadDiaryEntry() {
+        long entryId = getPassedEntryId();
+        if (entryId == TODAY_ENTRY_ID) {
+            new LoadTodaysDiaryEntryAsyncTask(getApplicationContext(), this).execute();
         } else {
-            DiaryRepository repository = new DiaryRepository();
-            diaryEntry = repository.findById(entryId);
+            new LoadDiaryEntryAsyncTask(getApplicationContext(), this).execute(entryId);
         }
     }
 
-    private void createNewEntry() {
-        diaryEntry = new DiaryEntry();
-        diaryEntry.setReadingDate(new Date());
+    private long getPassedEntryId() {
+        return getIntent().getExtras().getLong(EXTRAS_KEY_ENTRY_ID, NEW_ENTRY_ID);
     }
 
-    private int getPassedEntryId() {
-        return getIntent().getExtras().getInt(EXTRAS_KEY_ENTRY_ID, DiaryRepository.NEW_ENTRY_ID);
+    private static class LoadDiaryEntryAsyncTask extends AsyncTask<Long, Void, DiaryEntry> {
+
+        private final Context context;
+        private final ActivityEntryDetails activity;
+
+        public LoadDiaryEntryAsyncTask(Context appContext, ActivityEntryDetails activity) {
+            this.context = appContext;
+            this.activity = activity;
+        }
+
+        @Override
+        protected DiaryEntry doInBackground(Long... entryIds) {
+            DiaryEntry diaryEntry = null;
+            long entryId = entryIds[0];
+            if (entryId == NEW_ENTRY_ID) {
+                diaryEntry = new DiaryEntry(new Date());
+            } else {
+                DiaryRepository repository = new DiaryRepository(context);
+                diaryEntry = repository.findById(entryId);
+            }
+            return diaryEntry;
+        }
+
+        @Override
+        protected void onPostExecute(DiaryEntry diaryEntry) {
+            activity.populateDiaryEntry(diaryEntry);
+        }
+    }
+
+    private static class LoadTodaysDiaryEntryAsyncTask extends AsyncTask<Void, Void, DiaryEntry> {
+
+        private final Context context;
+        private final ActivityEntryDetails activity;
+
+        public LoadTodaysDiaryEntryAsyncTask(Context appContext, ActivityEntryDetails activity) {
+            this.context = appContext;
+            this.activity = activity;
+        }
+
+        @Override
+        protected DiaryEntry doInBackground(Void... voids) {
+            DiaryEntry diaryEntry = null;
+            DiaryRepository repository = new DiaryRepository(context);
+            diaryEntry = repository.findForDate(new Date());
+            return diaryEntry;
+        }
+
+        @Override
+        protected void onPostExecute(DiaryEntry diaryEntry) {
+            activity.populateDiaryEntry(diaryEntry);
+        }
+    }
+
+    private static class SaveDiaryEntryAsyncTask extends AsyncTask<DiaryEntry, Void, Void> {
+
+        private final Context context;
+        private final ActivityEntryDetails activity;
+
+        public SaveDiaryEntryAsyncTask(Context appContext, ActivityEntryDetails activity) {
+            this.context = appContext;
+            this.activity = activity;
+        }
+
+        @Override
+        protected Void doInBackground(DiaryEntry... entries) {
+            DiaryEntry diaryEntry = entries[0];
+            DiaryRepository repository = new DiaryRepository(context);
+            repository.saveEntry(diaryEntry);
+            return null;
+        }
     }
 }
