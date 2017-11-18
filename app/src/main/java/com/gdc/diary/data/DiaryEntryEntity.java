@@ -13,7 +13,7 @@ public class DiaryEntryEntity {
     @ColumnInfo(name = "_id")
     public long id;
     @ColumnInfo(name = "reading_date")
-    public Date readingDate;
+    public String readingDate;
     @ColumnInfo(name = "morning_reading")
     public int morningReading;
     @ColumnInfo(name = "weight")

@@ -46,17 +46,17 @@ public class ActivityHistory extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewHistory);
         textViewEmptyHistory = (TextView) findViewById(R.id.textViewEmptyHistory);
         initEditButton();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         displayContent();
     }
 
     private void setHistoryListVisibility(boolean isVisible) {
         recyclerView.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
         textViewEmptyHistory.setVisibility(isVisible ? View.INVISIBLE : View.VISIBLE);
-    }
-
-    private void makeHistoryListInvisible() {
-        recyclerView.setVisibility(View.INVISIBLE);
-        textViewEmptyHistory.setVisibility(View.VISIBLE);
     }
 
     private void initEditButton() {

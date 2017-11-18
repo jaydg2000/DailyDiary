@@ -1,5 +1,6 @@
 package com.gdc.diary.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -29,7 +30,7 @@ public class DiaryEntry {
             boolean hasTakenEveningMeds) {
 
         this.id = id;
-        this.readingDate = readingDate;
+        setReadingDate(readingDate);
         this.morningReading = morningReading;
         this.weight = weight;
         this.hasTakenMorningMeds = hasTakenMorningMeds;
@@ -67,8 +68,22 @@ public class DiaryEntry {
     public boolean isSugarReadingGood() {
         return morningReading < 160;
     }
-    
+
     public boolean isNew() {
         return id == NEW_ID;
+    }
+
+    private void setReadingDate(Date readingDate) {
+        Date newDate = readingDate == null ? new Date() : readingDate;
+        this.readingDate = getDateWithoutTime(newDate);
+    }
+
+    private Date getDateWithoutTime(Date theDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(theDate);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();
     }
 }

@@ -6,6 +6,7 @@ import com.gdc.diary.data.DiaryDAO;
 import com.gdc.diary.data.DiaryDatabaseFactory;
 import com.gdc.diary.data.DiaryEntryEntity;
 import com.gdc.diary.domain.DiaryEntry;
+import com.gdc.diary.helpers.DateHelper;
 import com.gdc.diary.mapper.DiaryEntryToEntityMapper;
 import com.gdc.diary.mapper.EntityToDiaryEntryMapper;
 
@@ -41,7 +42,8 @@ public class DiaryRepository {
 
     public DiaryEntry findForDate(Date searchDate) {
         DiaryDAO dao = DiaryDatabaseFactory.getDiaryDAO(context);
-        DiaryEntryEntity entity = dao.findForDate(searchDate);
+        String sqlDateStr = DateHelper.getSQLDateStr(searchDate);
+        DiaryEntryEntity entity = dao.findForDate(sqlDateStr);
         if (entity == null) {
             return new DiaryEntry(new Date());
         }
