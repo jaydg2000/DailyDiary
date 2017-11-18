@@ -5,11 +5,10 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import io.reactivex.Single;
 
 @Dao
 public interface DiaryDAO {
@@ -17,8 +16,8 @@ public interface DiaryDAO {
     @Query("SELECT * FROM diary_entry")
     List<DiaryEntryEntity> findAllEntries();
 
-    @Query("SELECT * FROM diary_entry WHERE reading_date = :searchDate LIMIT 1")
-    DiaryEntryEntity findForDate(Date searchDate);
+    @Query("SELECT * FROM diary_entry WHERE reading_date = :searchDateStr LIMIT 1")
+    DiaryEntryEntity findForDate(String searchDateStr);
 
     @Query("SELECT * FROM diary_entry WHERE _id = :id")
     DiaryEntryEntity findById(long id);

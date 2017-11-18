@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gdc.diary.domain.DiaryEntry;
 import com.gdc.diary.helpers.DateHelper;
@@ -78,6 +79,29 @@ public class ActivityEntryDetails extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveDiaryEntry();
+    }
+
+    private void saveDiaryEntry() {
+        updateDiaryEntry();
+        new SaveDiaryEntryAsyncTask(getApplicationContext()).execute(diaryEntry);
+        // TODO: Figure out how to handle failure.
+        Toast.makeText(this, "Entry saved.", Toast.LENGTH_SHORT);
+    }
+
+    private void updateDiaryEntry() {
+        long id = diaryEntry.getId();
+        Date readingDate = diaryEntry.getReadingDate();
+        int morningReading = Integer.parseInt(editTextReading.getText().toString());
+        int weight = Integer.parseInt(editTextWeight.getText().toString());
+        boolean hasTakenMorningMeds = checkBoxMorning.isChecked();
+        boolean hasTakenEveningMeds = checkBoxEvening.isChecked();
+        diaryEntry = new DiaryEntry(id, readingDate, morningReading, weight, hasTakenMorningMeds, hasTakenEveningMeds);
+    }
+
     private long getPassedEntryId() {
         return getIntent().getExtras().getLong(EXTRAS_KEY_ENTRY_ID, NEW_ENTRY_ID);
     }
@@ -138,11 +162,9 @@ public class ActivityEntryDetails extends AppCompatActivity {
     private static class SaveDiaryEntryAsyncTask extends AsyncTask<DiaryEntry, Void, Void> {
 
         private final Context context;
-        private final ActivityEntryDetails activity;
 
-        public SaveDiaryEntryAsyncTask(Context appContext, ActivityEntryDetails activity) {
+        public SaveDiaryEntryAsyncTask(Context appContext) {
             this.context = appContext;
-            this.activity = activity;
         }
 
         @Override
