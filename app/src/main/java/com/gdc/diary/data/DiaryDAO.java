@@ -13,7 +13,7 @@ import io.reactivex.Single;
 @Dao
 public interface DiaryDAO {
 
-    @Query("SELECT * FROM diary_entry")
+    @Query("SELECT * FROM diary_entry ORDER BY create_date DESC")
     List<DiaryEntryEntity> findAllEntries();
 
     @Query("SELECT * FROM diary_entry WHERE reading_date = :searchDateStr LIMIT 1")

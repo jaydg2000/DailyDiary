@@ -299,6 +299,11 @@ public final class DateHelper {
         return cal.getTime();
     }
 
+    public static Date getDateFromValues(int year, int month, int day, int hour, int minute, int second) {
+        Calendar cal = Calendar.getInstance(_locale);
+        cal.set(year, month, day, hour, minute, second);
+        return cal.getTime();
+    }
 
     /**
      * Returns a Date with time from integer values for year, month, day,

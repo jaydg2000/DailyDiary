@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by jaydg on 11/14/2017.
- */
-
-public class DiaryRepository {
+public final class DiaryRepository {
 
     private Context context;
     private EntityToDiaryEntryMapper domainMapper;

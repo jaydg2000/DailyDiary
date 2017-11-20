@@ -9,6 +9,7 @@ public class DiaryEntryToEntityMapper implements Mapper<DiaryEntry, DiaryEntryEn
     public DiaryEntryEntity map(DiaryEntry diaryEntry) {
         DiaryEntryEntity entity = new DiaryEntryEntity();
         entity.id = diaryEntry.getId() == -1 ? 0 : diaryEntry.getId();
+        entity.createDate = diaryEntry.getCreateDate();
         entity.readingDate = DateHelper.getSQLDateStr(diaryEntry.getReadingDate());
         entity.hasTakenEveningMeds = diaryEntry.hasTakenEveningMeds();
         entity.hasTakenMorningMeds = diaryEntry.hasTakenMorningMeds();

@@ -31,9 +31,13 @@ public class ActivityEntryDetails extends AppCompatActivity {
     private CheckBox checkBoxEvening;
 
     public static void start(Context context, long id) {
+        context.startActivity(getStartIntent(context, id));
+    }
+
+    public static Intent getStartIntent(Context context, long id) {
         Intent starter = new Intent(context, ActivityEntryDetails.class);
         starter.putExtra(EXTRAS_KEY_ENTRY_ID, id);
-        context.startActivity(starter);
+        return starter;
     }
 
     public void populateDiaryEntry(DiaryEntry diaryEntry) {
@@ -94,12 +98,20 @@ public class ActivityEntryDetails extends AppCompatActivity {
 
     private void updateDiaryEntry() {
         long id = diaryEntry.getId();
+        Date createDate = diaryEntry.getCreateDate();
         Date readingDate = diaryEntry.getReadingDate();
         int morningReading = Integer.parseInt(editTextReading.getText().toString());
         int weight = Integer.parseInt(editTextWeight.getText().toString());
         boolean hasTakenMorningMeds = checkBoxMorning.isChecked();
         boolean hasTakenEveningMeds = checkBoxEvening.isChecked();
-        diaryEntry = new DiaryEntry(id, readingDate, morningReading, weight, hasTakenMorningMeds, hasTakenEveningMeds);
+        diaryEntry = new DiaryEntry(
+                id,
+                readingDate,
+                morningReading,
+                weight,
+                hasTakenMorningMeds,
+                hasTakenEveningMeds,
+                createDate);
     }
 
     private long getPassedEntryId() {

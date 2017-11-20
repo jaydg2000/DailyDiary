@@ -13,6 +13,7 @@ public class EntityToDiaryEntryMapper implements Mapper<DiaryEntryEntity, DiaryE
                 entity.morningReading,
                 entity.weight,
                 entity.hasTakenMorningMeds,
-                entity.hasTakenEveningMeds);
+                entity.hasTakenEveningMeds,
+                entity.createDate);
     }
 }
