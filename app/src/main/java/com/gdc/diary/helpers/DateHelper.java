@@ -367,6 +367,14 @@ public final class DateHelper {
         return cal.getTime();
     }
 
+    public static Date CalcRelativeDate(int days, int hours, int minutes) {
+        Calendar cal = Calendar.getInstance(_locale);
+        cal.add(Calendar.DATE, days);
+        cal.add(Calendar.HOUR_OF_DAY, hours);
+        cal.add(Calendar.MINUTE, minutes);
+        return cal.getTime();
+    }
+
 
     /**
      * Returns the full length name of the month from the supplied date.

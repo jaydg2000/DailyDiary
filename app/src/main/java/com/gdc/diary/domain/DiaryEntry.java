@@ -73,7 +73,7 @@ public class DiaryEntry {
     }
 
     public boolean isSugarReadingGood() {
-        return morningReading < 160;
+        return morningReading < 121;
     }
 
     public boolean isNew() {
