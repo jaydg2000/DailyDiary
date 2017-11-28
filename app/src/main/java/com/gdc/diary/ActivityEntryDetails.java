@@ -31,9 +31,13 @@ public class ActivityEntryDetails extends AppCompatActivity {
     private CheckBox checkBoxEvening;
 
     public static void start(Context context, long id) {
+        context.startActivity(getStartIntent(context, id));
+    }
+
+    public static Intent getStartIntent(Context context, long id) {
         Intent starter = new Intent(context, ActivityEntryDetails.class);
         starter.putExtra(EXTRAS_KEY_ENTRY_ID, id);
-        context.startActivity(starter);
+        return starter;
     }
 
     public void populateDiaryEntry(DiaryEntry diaryEntry) {
@@ -87,19 +91,39 @@ public class ActivityEntryDetails extends AppCompatActivity {
 
     private void saveDiaryEntry() {
         updateDiaryEntry();
-        new SaveDiaryEntryAsyncTask(getApplicationContext()).execute(diaryEntry);
-        // TODO: Figure out how to handle failure.
-        Toast.makeText(this, "Entry saved.", Toast.LENGTH_SHORT);
+        if (diaryEntry.getMorningReading() < 1) {
+            Toast.makeText(this, "Entry NOT saved. Sugar reading not entered!", Toast.LENGTH_SHORT).show();
+        } else {
+            new SaveDiaryEntryAsyncTask(getApplicationContext()).execute(diaryEntry);
+            // TODO: Figure out how to handle failure.
+            Toast.makeText(this, "Entry saved.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateDiaryEntry() {
         long id = diaryEntry.getId();
+        Date createDate = diaryEntry.getCreateDate();
         Date readingDate = diaryEntry.getReadingDate();
-        int morningReading = Integer.parseInt(editTextReading.getText().toString());
-        int weight = Integer.parseInt(editTextWeight.getText().toString());
+        int morningReading = parseReadingNumber(editTextReading.getText().toString());
+        int weight = parseReadingNumber(editTextWeight.getText().toString());
         boolean hasTakenMorningMeds = checkBoxMorning.isChecked();
         boolean hasTakenEveningMeds = checkBoxEvening.isChecked();
-        diaryEntry = new DiaryEntry(id, readingDate, morningReading, weight, hasTakenMorningMeds, hasTakenEveningMeds);
+        diaryEntry = new DiaryEntry(
+                id,
+                readingDate,
+                morningReading,
+                weight,
+                hasTakenMorningMeds,
+                hasTakenEveningMeds,
+                createDate);
+    }
+
+    private int parseReadingNumber(String input) {
+        if (input == null || input.length() < 1) {
+            return 0;
+        }
+
+        return Integer.parseInt(input);
     }
 
     private long getPassedEntryId() {

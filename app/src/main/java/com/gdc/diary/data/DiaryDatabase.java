@@ -5,6 +5,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 
 @Database(entities = DiaryEntryEntity.class, version = 1)
+@TypeConverters(DiaryTypeConverters.class)
 public abstract class DiaryDatabase extends RoomDatabase {
     abstract DiaryDAO getDiaryDAO();
 }

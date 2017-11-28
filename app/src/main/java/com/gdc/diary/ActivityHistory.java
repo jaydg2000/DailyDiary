@@ -46,12 +46,21 @@ public class ActivityHistory extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewHistory);
         textViewEmptyHistory = (TextView) findViewById(R.id.textViewEmptyHistory);
         initEditButton();
+        createDefaultDiaryEntryAlarm();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         displayContent();
+    }
+
+    private void createDefaultDiaryEntryAlarm() {
+        new DiaryNotificationManager()
+                .createAlarmForNotification(
+                        this,
+                        DiaryNotificationManager.DEFAULT_ALARM_HOUR,
+                        DiaryNotificationManager.DEFAULT_ALARM_MINUTE);
     }
 
     private void setHistoryListVisibility(boolean isVisible) {
@@ -84,7 +93,6 @@ public class ActivityHistory extends AppCompatActivity {
     }
 
     private static class RetrieveHistoryAsyncTask extends AsyncTask<Void, Void, List<DiaryEntry>> {
-
         private WeakReference<ActivityHistory> activity;
         private Context context;
 

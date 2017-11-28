@@ -299,6 +299,11 @@ public final class DateHelper {
         return cal.getTime();
     }
 
+    public static Date getDateFromValues(int year, int month, int day, int hour, int minute, int second) {
+        Calendar cal = Calendar.getInstance(_locale);
+        cal.set(year, month, day, hour, minute, second);
+        return cal.getTime();
+    }
 
     /**
      * Returns a Date with time from integer values for year, month, day,
@@ -359,6 +364,14 @@ public final class DateHelper {
     public static Date CalcRelativeDate(int days) {
         Calendar cal = Calendar.getInstance(_locale);
         cal.add(Calendar.DATE, days);
+        return cal.getTime();
+    }
+
+    public static Date CalcRelativeDate(int days, int hours, int minutes) {
+        Calendar cal = Calendar.getInstance(_locale);
+        cal.add(Calendar.DATE, days);
+        cal.add(Calendar.HOUR_OF_DAY, hours);
+        cal.add(Calendar.MINUTE, minutes);
         return cal.getTime();
     }
 

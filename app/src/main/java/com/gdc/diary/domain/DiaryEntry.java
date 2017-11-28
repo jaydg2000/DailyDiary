@@ -11,6 +11,7 @@ public class DiaryEntry {
 
     private static final int NEW_ID = -1;
     private long id;
+    private Date createDate;
     private Date readingDate;
     private int morningReading;
     private int weight;
@@ -18,7 +19,7 @@ public class DiaryEntry {
     private boolean hasTakenEveningMeds;
 
     public DiaryEntry(Date readingDate) {
-        this(NEW_ID, new Date(), 0, 0, false, false);
+        this(NEW_ID, new Date(), 0, 0, false, false, new Date());
     }
 
     public DiaryEntry(
@@ -27,7 +28,8 @@ public class DiaryEntry {
             int morningReading,
             int weight,
             boolean hasTakenMorningMeds,
-            boolean hasTakenEveningMeds) {
+            boolean hasTakenEveningMeds,
+            Date createDate) {
 
         this.id = id;
         setReadingDate(readingDate);
@@ -35,6 +37,7 @@ public class DiaryEntry {
         this.weight = weight;
         this.hasTakenMorningMeds = hasTakenMorningMeds;
         this.hasTakenEveningMeds = hasTakenEveningMeds;
+        this.createDate = createDate;
     }
 
     public long getId() {
@@ -43,6 +46,10 @@ public class DiaryEntry {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
     public Date getReadingDate() {
@@ -66,7 +73,7 @@ public class DiaryEntry {
     }
 
     public boolean isSugarReadingGood() {
-        return morningReading < 160;
+        return morningReading < 121;
     }
 
     public boolean isNew() {
