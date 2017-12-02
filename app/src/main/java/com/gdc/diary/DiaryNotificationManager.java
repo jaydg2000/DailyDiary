@@ -21,6 +21,13 @@ public final class DiaryNotificationManager {
     public static final int DEFAULT_ALARM_HOUR = 6;
     public static final int DEFAULT_ALARM_MINUTE = 0;
 
+    public void createAlarmForNotification(Context context) {
+        createAlarmForNotification(
+                context,
+                DiaryNotificationManager.DEFAULT_ALARM_HOUR,
+                DiaryNotificationManager.DEFAULT_ALARM_MINUTE);
+    }
+
     public void createAlarmForNotification(Context context, int snoozeMinutes) {
         Date now = DateHelper.getCurrentDateTime();
 

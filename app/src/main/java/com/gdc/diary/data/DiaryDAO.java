@@ -1,6 +1,7 @@
 package com.gdc.diary.data;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -27,4 +28,7 @@ public interface DiaryDAO {
 
     @Update
     void updateEntry(DiaryEntryEntity entry);
+
+    @Query("DELETE FROM diary_entry")
+    int deleteAll();
 }

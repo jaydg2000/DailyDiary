@@ -69,6 +69,8 @@ public class ActivityAlarmOptions extends AppCompatActivity {
         buttonTakeReadings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new DiaryNotificationManager()
+                        .createAlarmForNotification(ActivityAlarmOptions.this);
                 ActivityEntryDetails.start(
                         ActivityAlarmOptions.this,
                         ActivityEntryDetails.TODAY_ENTRY_ID);
