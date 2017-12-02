@@ -22,6 +22,7 @@ public class DiaryAlarmReciever extends BroadcastReceiver {
         if (intent.hasExtra(DiaryNotificationManager.EXTRA_DIARY_ALARM_ID)) {
             DiaryNotificationManager diaryAlarmManager = new DiaryNotificationManager();
             diaryAlarmManager.createNotificationForDiaryEntryReminder(context);
+            diaryAlarmManager.createAlarmForNotification(context, 5);
         }
     }
 }

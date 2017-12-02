@@ -62,4 +62,9 @@ public final class DiaryRepository {
             dao.updateEntry(diaryEntryEntity);
         }
     }
+
+    public int deleteHistory() {
+        DiaryDAO dao = DiaryDatabaseFactory.getDiaryDAO(context);
+        return dao.deleteAll();
+    }
 }
