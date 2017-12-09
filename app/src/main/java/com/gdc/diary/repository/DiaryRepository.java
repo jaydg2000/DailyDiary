@@ -19,6 +19,7 @@ public final class DiaryRepository {
     private Context context;
     private EntityToDiaryEntryMapper domainMapper;
     private DiaryEntryToEntityMapper entityMapper;
+
     public DiaryRepository(Context appContext) {
         this.context = appContext;
         this.domainMapper = new EntityToDiaryEntryMapper();
@@ -27,7 +28,9 @@ public final class DiaryRepository {
 
     public List<DiaryEntry> findAllEntries() {
         DiaryDAO dao = DiaryDatabaseFactory.getDiaryDAO(context);
+
         List<DiaryEntryEntity> allEntries = dao.findAllEntries();
+
         List<DiaryEntry> entries = new ArrayList<>();
         for (DiaryEntryEntity entity : allEntries) {
             entries.add(domainMapper.map(entity));

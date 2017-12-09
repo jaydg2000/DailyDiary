@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">Blood Glucose Diary</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="alarm_options_remind_me">Remind me in another ...</string>
+    <string name="alarm_options_short">15 minutes</string>
+    <string name="alarm_options_medium">30 minutes</string>
+    <string name="alarm_options_long">60 minutes</string>
+    <string name="alarm_options_snooze_button">Snooze</string>
+    <string name="alarm_options_nevermind_button">Nevermind, I\'ll enter my readings now.</string>
+    <string name="entry_details_blood_sugar_hint">Blood Sugar</string>
+    <string name="entry_details_weight_hint">Weight</string>
+    <string name="entry_details_took_morning_meds">Took Morning Meds</string>
+    <string name="entry_details_took_evening_meds">Took Evening Meds</string>
+    <string name="history_click_to_make_entry">Click the pencil below to make an entry</string>
+    <string name="history_no_items_no_entries_yet">No entries yet.</string>
+    <string name="diary_entry_item_pm">PM</string>
+    <string name="diary_entry_item_am">AM</string>
+    <string name="diary_entry_item_weight">Weight</string>
+    <string name="diary_entry_item_meds_taken">Meds Taken</string>
+    <string name="diary_entry_item_bgl_reading">BGL Reading</string>
+    <string name="diary_alarm_take_sugar_and_weight_readings">Take Sugar and Weight Readings</string>
+    <string name="notification_diary_alarm_snooze_button">Snooze</string>
 
     <!-- Strings related to Settings -->
 

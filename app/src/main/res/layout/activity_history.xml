@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Click the pencil below to make an entry" />
+        android:text="@string/history_click_to_make_entry" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewHistory"
