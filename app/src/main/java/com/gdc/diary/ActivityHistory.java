@@ -65,7 +65,6 @@ public class ActivityHistory extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.menuItemHistoryReport).setEnabled(false);
-        menu.findItem(R.id.menuItemHistorySettings).setEnabled(false);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -76,6 +75,9 @@ public class ActivityHistory extends AppCompatActivity {
         switch (id) {
             case R.id.menuItemHistoryDeleteAll:
                 deleteAllWithConfirmation();
+                return true;
+            case R.id.menuItemHistorySettings:
+                SettingsActivity.start(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -27,6 +27,9 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ActivityAlarmOptions"/>
+        <activity android:name=".ActivityProgressCalendar">
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -34,10 +37,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gdc.diary.ActivityHistory"/>
-        </activity>
-        <activity android:name=".ActivitySettings"/>
-        <activity android:name=".ActivityAlarmOptions"/>
-        <activity android:name=".ActivityProgressCalendar">
         </activity>
     </application>
 

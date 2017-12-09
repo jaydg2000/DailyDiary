@@ -7,5 +7,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="No entries yet." />
+        android:text="@string/history_no_items_no_entries_yet" />
 </FrameLayout>

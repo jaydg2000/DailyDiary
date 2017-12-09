@@ -7,20 +7,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewAlarmOptionsRemindMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Remind me in another ..."
+        android:text="@string/alarm_options_remind_me"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroupSnoozeOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -29,15 +29,14 @@
         android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
+        app:layout_constraintTop_toBottomOf="@+id/textViewAlarmOptionsRemindMe">
 
         <RadioButton
             android:id="@+id/radioButtonSnoozeShort"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="15 minutes"
+            android:text="@string/alarm_options_short"
             android:textSize="18sp" />
 
         <RadioButton
@@ -47,7 +46,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:text="30 minutes"
+            android:text="@string/alarm_options_medium"
             android:textSize="18sp" />
 
         <RadioButton
@@ -55,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="60 minutes"
+            android:text="@string/alarm_options_long"
             android:textSize="18sp" />
     </RadioGroup>
 
@@ -69,11 +68,11 @@
         android:layout_weight="1"
         android:backgroundTint="@color/colorPrimaryDark"
         android:elevation="6dp"
-        android:text="Snooze"
+        android:text="@string/alarm_options_snooze_button"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupSnoozeOptions" />
 
     <Button
         android:id="@+id/buttonTakeReadings"
@@ -83,7 +82,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Nevermind, I'll enter my readings now."
+        android:text="@string/alarm_options_nevermind_button"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
